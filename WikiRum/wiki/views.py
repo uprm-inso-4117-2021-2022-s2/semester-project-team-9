@@ -13,7 +13,7 @@ from .models import WikiPage, SubTopic
 def home(request):
     t = '#**hello** my *friend*'
     
-    return HttpResponse(markdown.markdown(t))
+    return render(request,'home.html')
 
 
 def ViewWikiPage(request,title):
