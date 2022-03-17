@@ -1,10 +1,13 @@
 from cgitb import text
 import imp
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 import markdown
 from .models import WikiPage, SubTopic
+from .forms import NewPageForm
+from django.contrib.auth.models import User
+
 
 
 # Create your views here.
@@ -30,4 +33,14 @@ def ViewWikiPage(request,title):
 
 
 def NewPage(request):
-    return 
+    user = User.objects.first()
+    if request.method == 'POST':
+        form = NewPageForm(request.POST)
+        if form.is_valid():
+            page = form.save(commit=False)
+            page.created_by = user
+            page.save()
+            return redirect('wikipage',tittle=page.title)
+    else:
+        form = NewPageForm()
+        return render(request,'newpage.html',{'form': form})
