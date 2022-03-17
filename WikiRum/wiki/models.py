@@ -1,4 +1,5 @@
 from email.policy import default
+from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
@@ -12,6 +13,7 @@ class WikiPage(models.Model):
     text = models.TextField(max_length=4000)
     img = models.ImageField(upload_to='images', default= None, blank=True)
     created_by = models.ForeignKey(User, related_name='pages',on_delete=CASCADE, null=True)
+    category = models.CharField(max_length=50, null=True)
 
     def get_text(self):
          return markdown.markdown(self.text)
