@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home, name='home'),
     path('pages/<title>', views.ViewWikiPage, name='wikipage'),
+    path('pages/newpage',views.NewPage, name='newpage')
 ]

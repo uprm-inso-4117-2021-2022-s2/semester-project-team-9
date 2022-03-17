@@ -21,9 +21,13 @@ def ViewWikiPage(request,title):
     page = get_object_or_404(WikiPage, title=title)
     page_text = page.get_text()
     # topics = page.subtopics.all()
-    topics_text = page.get_sub_topics()
+    topics = page.subtopics.all()
 
     # for t in topics:
     #     topics_text[t.title] = markdown.markdown(t.text)
 
-    return render(request,'pageview.html',{'page':page,'page_text':page_text,'topics_text':topics_text})
+    return render(request,'pageview.html',{'page':page,'page_text':page_text,'topics':topics})
+
+
+def NewPage(request):
+    return 

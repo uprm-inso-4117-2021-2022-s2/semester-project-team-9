@@ -9,9 +9,14 @@
 
     {{page_text|safe}}
 
-    {% for key, value in topics_text.items%}
+    <!-- {% for key, value in topics_text.items%}
       <h2>{{key}}</h2>
       {{value|safe}}
+    {% endfor %} -->
+
+    {% for t in topics%}
+      <h2>{{t.title}}</h2>
+      {{t.get_text|safe}}
     {% endfor %}
 
   </body>
