@@ -1,0 +1,20 @@
+.content{
+    justify-content: center;
+}
+
+.auth-acc{
+    background-color: aqua;
+}
+
+/* #auth-row{
+    justify-items: center;
+    color: aqua;
+} */
+
+.search-bar{
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    margin: 0;
+    padding: 0;
+}
