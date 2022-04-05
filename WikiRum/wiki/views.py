@@ -1,5 +1,6 @@
 from cgitb import text
 import imp
+from turtle import title
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
@@ -33,7 +34,7 @@ def ViewWikiPage(request,title):
 
 
 def NewPage(request):
-    user = User.objects.first()
+    user = request.user
     if request.method == 'POST':
         form = NewPageForm(request.POST)
         if form.is_valid():
@@ -44,3 +45,19 @@ def NewPage(request):
     else:
         form = NewPageForm()
         return render(request,'newpage.html',{'form': form})
+
+def AddSubTopic(request,page_id):
+    user = request.user
+    page = get_object_or_404(WikiPage,pid = page_id)
+    if request.method == 'POST':
+        form = NewSubTopicForm(request.POST)
+        if form.is_valid():
+            topic = form.save(commit=False)
+            topic.created_by = user
+            topic.topic = page
+            topic.save()
+            return redirect('wikipage',title=topic.title)
+    else:
+        form = NewSubTopicForm()
+        return render(request, 'newtopic.html', {'form':form, 'page':page})
+
