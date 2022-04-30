@@ -17,7 +17,7 @@ class WikiPage(models.Model):
 
     def get_text(self):
          return markdown.markdown(self.text)
-    
+
     def get_sub_topics(self):
         topics = self.subtopics.all()
         topics_text = {}
@@ -39,5 +39,3 @@ class Edit(models.Model):
     new_text = models.TextField(max_length=4000)
     edited_at = models.DateTimeField(auto_now_add=True)
     edited_by = models.ForeignKey(User, related_name='edits',on_delete=CASCADE, null=True)
-
-

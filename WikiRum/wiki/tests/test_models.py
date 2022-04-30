@@ -21,7 +21,7 @@ class TestModels(TestCase):
 
     def test_page_gettext(self):
         self.assertEquals(self.spanishpage.get_text(),markdown.markdown('This is **bold**.'))
-    
+
     def test_page_get_subtopics(self):
         #print(self.spanishpage.get_sub_topics()[1])
         self.assertEquals(len(self.spanishpage.get_sub_topics()), 2)
