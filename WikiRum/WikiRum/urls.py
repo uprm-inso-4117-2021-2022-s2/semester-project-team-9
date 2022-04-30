@@ -28,5 +28,6 @@ urlpatterns = [
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
     path('pages/newpage',views.NewPage, name='newpage'),
     path('pages/<title>', views.ViewWikiPage, name='wikipage'),
-    
+    path('pages/<title>/addtopic', views.AddSubTopic, name='newSubtopic')
+
 ]

@@ -6,8 +6,9 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 import markdown
 from .models import WikiPage, SubTopic
-from .forms import NewPageForm
+from .forms import NewPageForm, NewSubTopicForm
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -16,7 +17,7 @@ from django.contrib.auth.models import User
 
 def home(request):
     t = '#**hello** my *friend*'
-    
+
     return render(request,'home.html')
 
 
@@ -32,23 +33,25 @@ def ViewWikiPage(request,title):
 
     return render(request,'pageview.html',{'page':page,'page_text':page_text,'topics':topics})
 
-
+@csrf_exempt
 def NewPage(request):
-    user = request.user
+    #user = request.user
     if request.method == 'POST':
         form = NewPageForm(request.POST)
         if form.is_valid():
             page = form.save(commit=False)
-            page.created_by = user
+            #page.created_by = user
             page.save()
-            return redirect('wikipage',tittle=page.title)
+            # return redirect('wikipage',tittle=page.title)
+            return redirect('home')
     else:
         form = NewPageForm()
         return render(request,'newpage.html',{'form': form})
 
-def AddSubTopic(request,page_id):
+@csrf_exempt
+def AddSubTopic(request,title):
     user = request.user
-    page = get_object_or_404(WikiPage,pid = page_id)
+    page = get_object_or_404(WikiPage,title = title)
     if request.method == 'POST':
         form = NewSubTopicForm(request.POST)
         if form.is_valid():
@@ -56,8 +59,11 @@ def AddSubTopic(request,page_id):
             topic.created_by = user
             topic.topic = page
             topic.save()
-            return redirect('wikipage',title=topic.title)
+            return redirect('wikipage',title=title)
     else:
         form = NewSubTopicForm()
-        return render(request, 'newtopic.html', {'form':form, 'page':page})
-
+        page = get_object_or_404(WikiPage, title=title)
+        page_text = page.get_text()
+        # topics = page.subtopics.all()
+        topics = page.subtopics.all()
+        return render(request, 'newtopic.html', {'form':form, 'page':page,'page_text':page_text,'topics':topics})
