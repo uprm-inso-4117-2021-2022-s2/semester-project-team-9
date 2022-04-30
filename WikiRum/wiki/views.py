@@ -9,6 +9,8 @@ from .models import WikiPage, SubTopic
 from .forms import NewPageForm, NewSubTopicForm
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import UpdateView
+
 
 
 
@@ -67,3 +69,17 @@ def AddSubTopic(request,title):
         # topics = page.subtopics.all()
         topics = page.subtopics.all()
         return render(request, 'newtopic.html', {'form':form, 'page':page,'page_text':page_text,'topics':topics})
+
+
+class SubTopicEdit(UpdateView):
+    model = SubTopic
+    fields = ('text', )
+    template_name = 'edit_topic.html'
+    pk_url_kwarg = 'topic_pk'
+    context_object_name = 'post'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.save()
+
+        return redirect('wikipage',title=post.topic.title)

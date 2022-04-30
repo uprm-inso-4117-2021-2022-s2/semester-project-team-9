@@ -17,9 +17,11 @@
     {% for t in topics%}
       <h2>{{t.title}}</h2>
       {{t.get_text|safe}}
+
+        <a href="{%  url 'edit_topic' t.id %}">Edit Subtopic</a><br>
     {% endfor %}
 
-  <a href="{%  url 'newSubtopic' page.title %}">Add Subtopic</a>
+  <br><a href="{%  url 'newSubtopic' page.title %}">Add Subtopic</a>
 
   </body>
 </html>
