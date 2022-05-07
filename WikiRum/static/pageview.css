@@ -30,3 +30,7 @@ footer {
     padding: 3px;
     background-color: DarkSalmon;
   }
+  p {
+    text-align: justify;
+    text-justify: inter-word;
+  }

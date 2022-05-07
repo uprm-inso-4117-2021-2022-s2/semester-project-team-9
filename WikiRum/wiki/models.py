@@ -17,6 +17,12 @@ class WikiPage(models.Model):
 
     def get_text(self):
          return markdown.markdown(self.text)
+    
+    def get_title(self):
+         return markdown.markdown(self.title)
+
+    def get_img(self):
+         return markdown.markdown(self.img)
 
     def get_sub_topics(self):
         topics = self.subtopics.all()

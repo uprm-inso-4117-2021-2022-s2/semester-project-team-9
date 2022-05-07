@@ -108,23 +108,27 @@
 
         <div class="col-7" style="text-align: center; margin-top: 10px;">
           <div>
+            <!-- Topic card -->
+            <div class="card mx-auto d-flex justify-content-center" style="border-radius: 15px; width: 90%; filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));">
+              <h1 class="card-header text-start align-middle my-0">{{page.get_title|safe}}</h1>
+              <div class="card-body">
+                <p class="card-text text-start" style="text-align: justify; text-justify: inter-word">{{page_text|safe}}</p>
+              </div>
+            </div>
 
-            {{page_text|safe}}
-
-            <!-- {% for key, value in topics_text.items%}
-              <h2>{{key}}</h2>
-              {{value|safe}}
-            {% endfor %} -->
-        
+            <!-- Subtopic cards -->
             {% for t in topics%}
-              <h2>{{t.title}}</h2>
-              {{t.get_text|safe}}
-        
-                <a href="{%  url 'edit_topic' t.id %}">Edit Subtopic</a><br>
+            <div class="card my-4 mx-auto d-flex justify-content-center" style="border-radius: 15px; width: 90%; filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));">
+              <h4 class="card-header text-start">{{t.title}}</h4>
+              <div class="card-body">
+                <p class="card-text text-start" style="text-align: justify; text-justify: inter-word">{{t.get_text|safe}}</p>
+                <div class="d-flex justify-content-end">
+                  <a href="{%  url 'edit_topic' t.id %}" class="btn btn-primary">Edit Subtopic</a>
+                </div>
+              </div>
+            </div>
             {% endfor %}
-        
-          <br><a href="{%  url 'newSubtopic' page.title %}">Add Subtopic</a>
-
+            <a href="{%  url 'newSubtopic' page.title %}" class="btn btn-primary mb-5">Add Subtopic</a>
           </div>
         </div>
         <div class="col-3">

@@ -18,3 +18,8 @@
     margin: 0;
     padding: 0;
 }
+
+.card-img-top{
+    width: 200px;
+    height: auto;
+}
